@@ -1,0 +1,685 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700,900');
+
+@font-face {
+  font-family: 'Gilroy-Regular';
+  src: url('../src/fonts/Gilroy-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy-SemiBold';
+  src: url('../src/fonts/Gilroy-SemiBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy-Bold';
+  src: url('../src/fonts/Gilroy-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Gilroy-Black';
+  src: url('../src/fonts/Gilroy-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+}
+
+// Variables
+$body-bg: #332aa8;
+$font-color: #32324d;
+$theme-color: #111156;
+$button-color: #00ccff;
+$button-hover: #00b7e5;
+$neutral300: #c0c0cf;
+$neutral150: #eaeaef;
+$secondary-font-color: #666687;
+$generic-border: 1px solid $theme-color;
+$generic-box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 1px,
+  rgba(0, 0, 0, 0.1) 0px 4px 11px;
+$hover-transition: all 0.1s ease-in-out;
+
+// General Settings
+html {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  line-height: 1.4;
+  font-family: 'Roboto', sans-serif;
+  color: $font-color;
+  background-color: $body-bg;
+  font-smooth: always;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  font-family: 'Gilroy-bold', sans-serif;
+  font-weight: 700;
+  color: $font-color;
+  font-size: 24px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+h2 {
+  font-family: 'Gilroy-SemiBold', sans-serif;
+  font-weight: normal;
+  color: $font-color;
+  font-size: 20px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+h3 {
+  font-family: 'Gilroy-SemiBold', sans-serif;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 1.4;
+  margin: 0;
+}
+
+h4,
+span,
+div {
+  color: #fff;
+  line-height: 1.4;
+  font-weight: normal;
+  font-size: 16px;
+  margin: 0;
+}
+
+h5 {
+  font-weight: normal;
+  font-size: 14px;
+  margin: 0;
+}
+
+a, a:hover, a:focus, a:active {
+  text-decoration: none;
+}
+
+// Flex Flow Direction
+// - applies to: flex containers
+// row (default) | row-reverse | column | column-reverse
+@mixin flex-direction($direction: row) {
+    @if $direction == row-reverse {
+      -webkit-box-direction: reverse;
+      -webkit-box-orient: horizontal;
+      -moz-box-direction: reverse;
+      -moz-box-orient: horizontal;
+    } @else if $direction == column {
+      -webkit-box-direction: normal;
+      -webkit-box-orient: vertical;
+      -moz-box-direction: normal;
+      -moz-box-orient: vertical;
+    } @else if $direction == column-reverse {
+      -webkit-box-direction: reverse;
+      -webkit-box-orient: vertical;
+      -moz-box-direction: reverse;
+      -moz-box-orient: vertical;
+    } @else {
+      -webkit-box-direction: normal;
+      -webkit-box-orient: horizontal;
+      -moz-box-direction: normal;
+      -moz-box-orient: horizontal;
+    }
+    -webkit-flex-direction: $direction;
+    -ms-flex-direction: $direction;
+    flex-direction: $direction;
+}
+
+
+// Axis Alignment
+// - applies to: flex containers
+// flex-start | flex-end | center | space-between | space-around
+@mixin justify-content($value: flex-start) {
+    @if $value == flex-start {
+      -webkit-box-pack: start;
+      -moz-box-pack: start;
+      -ms-flex-pack: start;
+    } @else if $value == flex-end {
+      -webkit-box-pack: end;
+      -moz-box-pack: end;
+      -ms-flex-pack: end;
+    } @else if $value == space-between {
+      -webkit-box-pack: justify;
+      -moz-box-pack: justify;
+      -ms-flex-pack: justify;
+    } @else if $value == space-around {
+      -ms-flex-pack: distribute;
+    } @else {
+      -webkit-box-pack: $value;
+      -moz-box-pack: $value;
+      -ms-flex-pack: $value;
+    }
+    -webkit-justify-content: $value;
+    justify-content: $value;
+}
+
+// Packing Flex Lines
+// - applies to: multi-line flex containers
+// flex-start | flex-end | center | space-between | space-around | stretch
+@mixin align-content($value: stretch) {
+    // No Webkit Box Fallback.
+    -webkit-align-content: $value;
+    @if $value == flex-start {
+      -ms-flex-line-pack: start;
+    } @else if $value == flex-end {
+      -ms-flex-line-pack: end;
+    } @else {
+      -ms-flex-line-pack: $value;
+    }
+    align-content: $value;
+}
+
+// Cross-axis Alignment
+// - applies to: flex containers
+// flex-start | flex-end | center | baseline | stretch
+@mixin align-items($value: stretch) {
+    @if $value == flex-start {
+      -webkit-box-align: start;
+      -moz-box-align: start;
+      -ms-flex-align: start;
+    } @else if $value == flex-end {
+      -webkit-box-align: end;
+      -moz-box-align: end;
+      -ms-flex-align: end;
+    } @else {
+      -webkit-box-align: $value;
+      -moz-box-align: $value;
+      -ms-flex-align: $value;
+    }
+    -webkit-align-items: $value;
+    align-items: $value;
+}
+  
+  // Cross-axis Alignment
+  // - applies to: flex items
+  // auto | flex-start | flex-end | center | baseline | stretch
+@mixin align-self($value: auto) {
+    // No Webkit Box Fallback.
+    -webkit-align-self: $value;
+    @if $value == flex-start {
+      -ms-flex-item-align: start;
+    } @else if $value == flex-end {
+      -ms-flex-item-align: end;
+    } @else {
+      -ms-flex-item-align: $value;
+    }
+    align-self: $value;
+}
+
+  
+@mixin primary-btn(){
+    font-family: 'Gilroy-SemiBold';
+    padding: 15px 30px;
+    outline: none;
+    border: 0;
+    border-radius: 50px;
+    color: #fff;
+    background-color: $button-color;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    box-shadow: $generic-box-shadow;
+    cursor: pointer;
+
+    &:hover,
+    &:focus,
+    &:active {
+        background-color: $button-hover;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+}
+
+.dashboard{
+    position: absolute;
+    background-image: linear-gradient($theme-color, #332aa8);
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    &__container{
+        height: calc(100% - 30px);;
+        border: 2px solid #fff;
+        border-radius: 8px;
+        margin: 15px;
+        padding: 30px;
+        display: flex;
+        @include flex-direction(column);
+        @include align-items(center);
+
+        button{
+            @include primary-btn();
+            margin-top: 200px;
+        }
+
+        &__logo{
+            width: 90%;
+
+            @media screen and (min-width: 425px) {
+              width: 85%;
+            }
+
+            @media screen and (min-width: 576px) {
+              width: 50%;
+            }
+
+            @media screen and (min-width: 768px) {
+              width: 40%;
+            }
+
+            @media screen and (min-width: 1024px) {
+              width: 30%;
+            }
+
+            @media screen and (min-width: 1200px) {
+              width: 25%;
+            }
+        }
+    }
+}
+
+.nftGallery{
+    &__header{
+        height: 125px;
+        background-color: $theme-color;
+        color: #fff;
+        position: fixed;
+        text-align: center;
+        width: 100%;
+
+
+        h3{
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            width:190px;
+            margin: 0 auto;
+
+            @media screen and (min-width: 768px) {
+              width: 230px;
+            }
+        }
+
+        h2{
+            color: #fff;
+            font-family: 'Gilroy-semibold', sans-serif;
+        }
+
+        &__top{
+          display: flex;
+          padding: 15px;
+          @include justify-content(space-between);
+          @include align-items(center);
+
+          &__logo{
+            width: 45%;
+
+            @media screen and (min-width: 425px) {
+              width: 40%;
+            }
+
+            @media screen and (min-width: 576px) {
+              width: 30%;
+            }
+
+            @media screen and (min-width: 768px) {
+              width: 20%;
+            }
+
+            @media screen and (min-width: 1024px) {
+              width: 15%;
+            }
+
+            @media screen and (min-width: 1200px) {
+              width: 13%;
+            }
+
+            @media screen and (min-width: 1440px) {
+              width: 10%;
+            }
+          }
+
+          svg{
+            color: $button-color;
+            font-size: 24px;
+            cursor: pointer;
+          }
+        }
+
+        &__bottom{
+          padding-bottom: 15px;
+        }
+    }
+
+    &__content{
+        padding: 135px 7.5px 0 7.5px;
+        display: flex;
+        flex-wrap: wrap;
+
+        h2{
+            font-family: 'Gilroy-semibold', sans-serif;
+        }
+
+        &__nftCardWrapper{
+          width: 50%;
+          padding: 7.5px;
+
+          @media screen and (min-width: 576px) {
+            width: 33.33%;
+          }
+
+          @media screen and (min-width: 768px) {
+            width: 20%;
+          }
+
+          @media screen and (min-width: 1024px) {
+            width: 16.66%;
+          }
+
+          
+          &__nftCard{
+            min-height: 100%;
+            background-color: $theme-color;
+            border-radius: 8px;
+            border: 1px solid $button-color;
+            
+            &:hover, &:active, &:focus{
+              cursor: pointer;
+              box-shadow:  0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+            }
+
+            &__image{
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              overflow: hidden;
+
+              img{
+                object-fit: contain;
+                min-width: 100%;
+                min-height: 100%;
+                border-radius: 8px;
+              }
+            }
+            
+            &__info{
+                padding: 15px;
+
+                h3{
+                  color: #fff;
+                  overflow-wrap: break-word;
+                }
+
+               
+
+                &__button{
+                  padding-top:15px;
+                    cursor: pointer;
+                    
+                    h2{
+                      font-family: 'Gilroy-SemiBold';
+                        text-transform: uppercase;
+                        letter-spacing: 0.7px;
+                        color: $button-color;
+                        display: flex;
+                        @include align-items(center);
+                        @include justify-content(end);
+
+                        &:hover,
+                        &:focus,
+                        &:active {
+                          color: $button-hover;
+                        }
+                    }
+                }
+            }
+          }
+          }
+        }
+}
+
+.nftPage{
+  &__header{
+      height: 125px;
+      background-color: $theme-color;
+      color: #fff;
+      position: fixed;
+      text-align: center;
+      width: 100%;
+
+      h3{
+          width:190px;
+          margin: 0 auto;
+      }
+
+      h2{
+          color: #fff;
+          font-family: 'Gilroy-semibold', sans-serif;
+      }
+
+      &__top{
+        display: flex;
+        padding: 15px;
+        @include justify-content(space-between);
+        @include align-items(center);
+
+        &__logo{
+          width: 45%;
+        }
+
+        svg{
+          color: $button-color;
+          font-size: 24px;
+          cursor: pointer;
+        }
+      }
+
+      &__bottom{
+        padding-bottom: 15px;
+      }
+  }
+}
+
+.nftPage{
+
+    &__content{
+      padding: 141px 15px 0 15px;
+
+      @media screen and (min-width: 768px) {
+        display: flex;
+        align-items: flex-start;
+      }
+
+        &__image{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          overflow: hidden;
+          margin-bottom: 15px;
+
+          @media screen and (min-width: 576px) {
+            margin: 0 100px 15px 100px;
+          }
+
+          @media screen and (min-width: 768px) {
+            width: 40%;
+            margin: 0 30px 0 0;
+          }
+
+          @media screen and (min-width: 1024px) {
+            width: 35%;
+          }
+
+          @media screen and (min-width: 1200px) {
+            width: 30%;
+          }
+
+          img{
+            object-fit: contain;
+            min-width: 100%;
+            min-height: 100%;
+            border-radius: 8px;
+          }
+        }
+
+        &__info{
+
+          @media screen and (min-width: 768px) {
+            width: 60%;
+          }
+
+          @media screen and (min-width: 1024px) {
+            width: 65%;
+          }
+
+          @media screen and (min-width: 1200px) {
+            width: 70%;
+          }
+
+            &__section{
+                margin-bottom: 30px;
+
+                h3{
+                    color: $button-color;
+                    font-family: 'Gilroy-Bold', sans-serif;
+                    border-bottom: $generic-border;
+                    padding-bottom: 5px;
+                    margin-bottom: 5px;
+                }
+
+                h4{
+                  word-wrap: break-word;
+                }
+
+            }
+        }
+    }
+}
+
+
+.modal {
+    width: 100%;
+    height: fit-content;
+    display: block;
+    border-radius: 8px;
+    outline: none;
+    background-color: $theme-color;
+    z-index: 100;
+    color: #fff;
+
+    &__overlay {
+      overflow-y: auto;
+      background-color: rgba(60, 60, 60, 0.3);
+      height: 100vh;
+      padding: 30vh 15px 15px 15px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+
+      @media screen and (min-width: 576px) {
+        padding: 27vh 60px 15px 60px;
+      }
+
+      @media screen and (min-width: 768px) {
+        padding: 27vh 130px 15px 130px;
+      }
+
+      @media screen and (min-width: 1024px) {
+        padding: 32vh 260px 15px 260px;
+      }
+
+      @media screen and (min-width: 1200px) {
+        padding: 32vh 360px 15px 360px;
+      }
+
+      @media screen and (min-width: 1440px) {
+        padding: 32vh 500px 15px 500px;
+      }
+      
+    }
+
+    &__header {
+      display: flex;
+      @include align-items(center);
+      @include justify-content(center);
+      padding:15px;
+      width: 100%;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      position: relative;
+
+      svg{
+        position: absolute;
+        top: 17px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      h2{
+        color: #fff;
+      }
+
+    }
+
+    &__content{
+      padding: 0 15px 15px 15px;
+
+      &__wallet{
+        padding: 15px 10px;
+        display: flex;
+        @include align-items(center);
+        text-decoration: none;
+        color: #fff;
+
+        &__logo{
+          width: 30px;
+          margin-right: 10px;
+        }
+
+        &:hover, &:focus, &:active {
+          border: 1px solid #fff;
+          border-radius: 8px;
+          cursor: pointer;
+          text-decoration: none;
+          color: #fff;
+
+        }
+
+        h3{
+          text-decoration: none;
+          
+        }
+      }
+    }
+
+  }
